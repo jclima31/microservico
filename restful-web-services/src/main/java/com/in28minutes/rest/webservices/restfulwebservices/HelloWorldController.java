@@ -1,0 +1,16 @@
+package com.in28minutes.rest.webservices.restfulwebservices;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloWorldController {
+	
+	//http://localhost:8089/hello-world
+	@RequestMapping(method=RequestMethod.GET, path="/hello-world")
+	public String helloWorld(){
+		
+		return "Hello World";
+	}
+}
