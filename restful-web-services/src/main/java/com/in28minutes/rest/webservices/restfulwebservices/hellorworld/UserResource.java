@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +51,16 @@ public class UserResource {
 		return ResponseEntity.created(location).build();
 	}
 	
+	
+	//Tentara buscar o usuario, se encontrar deleta, se nao encontrar 
+	//Adiciona uma excecao de usuario nao encontrado
+	@DeleteMapping(path="/users/{id}")
+	public void deleteUser(@PathVariable Integer id){
+		User user = service.deleteById(id);
+		if(user == null){
+			
+			throw new UserNotFoundException("id-"+ id);
+		}
+	}
 	
 }
