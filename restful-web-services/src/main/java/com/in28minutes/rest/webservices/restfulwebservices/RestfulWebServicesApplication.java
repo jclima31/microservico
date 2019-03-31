@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.LocaleResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.server.i18n.AcceptHeaderLocaleContextResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @SpringBootApplication
@@ -18,16 +19,19 @@ public class RestfulWebServicesApplication {
 
 	@Bean
 	public LocaleResolver localeResolver(){
-		SessionLocaleResolver localResolver = new SessionLocaleResolver();
+		AcceptHeaderLocaleContextResolver localResolver = new AcceptHeaderLocaleContextResolver();
 		localResolver.setDefaultLocale(Locale.US);
 		return localeResolver();
 	}
 	
-	public ResourceBundleMessageSource bundleMessageSource(){
+	
+	/*Nao e mais necessario por foi adicionado
+	 * spring.messages.basename=messages no application properties
+	 * public ResourceBundleMessageSource bundleMessageSource(){
 		
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		return messageSource;
-	}
+	}*/
 	
 }

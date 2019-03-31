@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 
@@ -84,8 +85,8 @@ public class UserResource {
 	//Implementacao de internacionalizacao
 	//Para funcionar no postman vc inclui o atributo Accept-Language e poe a lingua q vc quer
 	@GetMapping(path = "hello-world-internationalized")
-	public String helloWorldInternationalized(@RequestHeader(name="Accept-Language", required=false) Locale locale){
-		return messageSource.getMessage("good.morning.message", null, locale);
+	public String helloWorldInternationalized(){
+		return messageSource.getMessage("good.morning.message", null, LocaleContextHolder.getLocale());
 	}
 	
 }
