@@ -2,10 +2,12 @@ package com.in28minutes.rest.webservices.restfulwebservices.hellorworld;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +27,9 @@ import com.in28minutes.rest.webservices.restfulwebservices.user.User;
 
 @RestController
 public class UserResource {
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@Autowired
 	private UserDaoService service;
@@ -73,6 +79,13 @@ public class UserResource {
 		resource.add(linkTo.withRel("all-users"));
 		
 		return resource;
+	}
+	
+	//Implementacao de internacionalizacao
+	//Para funcionar no postman vc inclui o atributo Accept-Language e poe a lingua q vc quer
+	@GetMapping(path = "hello-world-internationalized")
+	public String helloWorldInternationalized(@RequestHeader(name="Accept-Language", required=false) Locale locale){
+		return messageSource.getMessage("good.morning.message", null, locale);
 	}
 	
 }
