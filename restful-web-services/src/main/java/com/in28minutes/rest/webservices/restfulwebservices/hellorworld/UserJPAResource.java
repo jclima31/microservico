@@ -63,7 +63,7 @@ public class UserJPAResource {
 	
 	@PostMapping(path="/jpa/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user){
-		User savedUser = service.save(user);
+		User savedUser = userRepository.save(user);
 		
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -73,24 +73,10 @@ public class UserJPAResource {
 		return ResponseEntity.created(location).build();
 	}
 	
-	
-	//Tentara buscar o usuario, se encontrar deleta, se nao encontrar 
-	//Adiciona uma excecao de usuario nao encontrado
 	@DeleteMapping(path="/jpa/users/{id}")
-	public Resource<User> deleteUser(@PathVariable Integer id){
-		User user = service.deleteById(id);
-		if(user == null)
-			throw new UserNotFoundException("id-"+ id);
+	public void deleteUser(@PathVariable Integer id){
+		userRepository.deleteById(id);
 		
-		Resource<User> resource = new Resource<User>(user);
-		
-		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
-			
-		resource.add(linkTo.withRel("all-users"));
-		
-		return resource;
 	}
-	
-	
 	
 }
