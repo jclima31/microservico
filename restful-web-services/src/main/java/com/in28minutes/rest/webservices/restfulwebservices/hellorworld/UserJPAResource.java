@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.in28minutes.rest.webservices.restfulwebservices.UserDaoService;
+import com.in28minutes.rest.webservices.restfulwebservices.user.Post;
 import com.in28minutes.rest.webservices.restfulwebservices.user.User;
 import com.in28minutes.rest.webservices.restfulwebservices.user.UserRepository;
 
@@ -71,6 +72,17 @@ public class UserJPAResource {
 				.buildAndExpand(savedUser.getId()).toUri();
 		
 		return ResponseEntity.created(location).build();
+	}
+	
+	@GetMapping(path="/jpa/users/{id}/posts")
+	public List<Post> retrieveAllUsers(@PathVariable int id){
+		Optional<User> user = userRepository.findById(id);
+		
+		if(!user.isPresent()){
+			throw new UserNotFoundException("id-"+ id);
+		}
+		
+		return  user.get().getPost();
 	}
 	
 	@DeleteMapping(path="/jpa/users/{id}")
