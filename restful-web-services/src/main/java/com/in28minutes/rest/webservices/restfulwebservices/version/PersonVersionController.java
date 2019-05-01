@@ -28,15 +28,27 @@ public class PersonVersionController {
 		return new PersonV2(new Name("Bob", "Charlie"));
 	}
 	
-	//http://localhost:8080/person/param?verson=1
+	//no PostMan adicionar o headers
 	@GetMapping(value="/person/header", headers="X-API-VERSION=1")
 	public PersonV1 headerV1(){
 		return new PersonV1("Bob Charlie");
 	}
 	
-	//http:localhost:8080/person/param?verson=2
+	//no PostMan adicionar o headers
 	@GetMapping(value="/person/header", headers="X-API-VERSION=2")
 	public PersonV2 headerV2(){
+		return new PersonV2(new Name("Bob", "Charlie"));
+	}
+	
+	//no header poe Accept e no value poe application/vnd.company.app-v1+json
+	@GetMapping(value="/person/produces", produces="application/vnd.company.app-v1+json")
+	public PersonV1 producesV1(){
+		return new PersonV1("Bob Charlie");
+	}
+	
+	//no header poe Accept e no value poe application/vnd.company.app-v2+json
+	@GetMapping(value="/person/produces", produces="application/vnd.company.app-v2+json")
+	public PersonV2 producesV2(){
 		return new PersonV2(new Name("Bob", "Charlie"));
 	}
 	
